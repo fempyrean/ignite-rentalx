@@ -6,13 +6,9 @@
     "esModuleInterop": true,
     "allowJs": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "**/*.spec.ts",
-    "**/*.test.ts"
-  ]
+  "include": ["src"],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts"]
 }
