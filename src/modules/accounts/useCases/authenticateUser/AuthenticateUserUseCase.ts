@@ -1,5 +1,6 @@
-import { IUserRepository } from '../../repositories/IUserRepository'
-import { AppError } from '../../../../errors/AppError'
+import 'reflect-metadata'
+import { IUserRepository } from '@modules/accounts/repositories/IUserRepository'
+import { AppError } from '@errors/AppError'
 import { inject, injectable } from 'tsyringe'
 import { compare } from 'bcrypt'
 import { sign } from 'jsonwebtoken'
