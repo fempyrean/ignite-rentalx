@@ -1,8 +1,14 @@
+import { pathsToModuleNameMapper } from 'ts-jest/utils'
+import { compilerOptions } from './tsconfig.json'
+
 export default {
   bail: true,
   clearMocks: true,
   coverageProvider: 'v8',
   testEnvironment: 'node',
   preset: 'ts-jest',
-  testMatch: ['**/*.spec.ts']
+  testMatch: ['**/*.spec.ts'],
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: '<rootDir>/src'
+  })
 }
