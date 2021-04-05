@@ -1,8 +1,8 @@
-import { AuthenticateUserUseCase } from '../authenticateUser/AuthenticateUserUseCase'
-import { CreateUserUseCase } from '../createUser/CreateUserUseCase'
 import { UserRepositoryInMemory } from '../../repositories/in-memory/UserRepositoryInMemory'
+import { CreateUserUseCase } from '../createUser/CreateUserUseCase'
+import { AuthenticateUserUseCase } from '../authenticateUser/AuthenticateUserUseCase'
 import { ICreateUserDTO } from '../../dto/ICreateUserDTO'
-import { AppError } from '../../../../errors/AppError'
+import { AppError } from '../../../../shared/errors/AppError'
 
 const getUserData = () => ({
   name: 'any_name',

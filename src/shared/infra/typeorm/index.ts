@@ -18,6 +18,9 @@ export const createConnectionSQLite = async (): Promise<Connection> => {
   )
 }
 
-export const createConnectionPostgres = async (): Promise<Connection> => {
-  return createConnection()
+export const createConnectionPostgres = async (
+  host = 'localhost'
+): Promise<Connection> => {
+  const defaultOptions = await getConnectionOptions()
+  return createConnection(Object.assign(defaultOptions, { host }))
 }

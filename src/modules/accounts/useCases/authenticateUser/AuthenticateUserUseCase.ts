@@ -1,6 +1,5 @@
-import 'reflect-metadata'
 import { IUserRepository } from '@modules/accounts/repositories/IUserRepository'
-import { AppError } from '@errors/AppError'
+import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
 import { compare } from 'bcrypt'
 import { sign } from 'jsonwebtoken'

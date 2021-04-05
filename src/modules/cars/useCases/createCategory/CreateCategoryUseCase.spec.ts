@@ -1,14 +1,16 @@
 import { CategoryRepositoryInMemory } from '../../repositories/in-memory/CategoryRepositoryInMemory'
 import { CreateCategoryUseCase } from './CreateCategoryUseCase'
-import { AppError } from '../../../../errors/AppError'
+import { AppError } from '../../../../shared/errors/AppError'
 
 let createCategoryUseCase: CreateCategoryUseCase
-let categoryRepositoryInMemoy: CategoryRepositoryInMemory
+let categoryRepositoryInMemory: CategoryRepositoryInMemory
 
 describe('Create category', () => {
   beforeEach(() => {
-    categoryRepositoryInMemoy = new CategoryRepositoryInMemory()
-    createCategoryUseCase = new CreateCategoryUseCase(categoryRepositoryInMemoy)
+    categoryRepositoryInMemory = new CategoryRepositoryInMemory()
+    createCategoryUseCase = new CreateCategoryUseCase(
+      categoryRepositoryInMemory
+    )
   })
 
   it('should be able to create a new category', async () => {
@@ -17,7 +19,7 @@ describe('Create category', () => {
       description: 'any_description'
     }
     await createCategoryUseCase.execute(newCategory)
-    const category = await categoryRepositoryInMemoy.findByName('any_name')
+    const category = await categoryRepositoryInMemory.findByName('any_name')
     expect(category).toHaveProperty('id')
   })
 

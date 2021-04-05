@@ -1,4 +1,4 @@
-import { Category } from '../../../../entities/Category'
+import { Category } from '@modules/cars/infra/typeorm/entities/Category'
 import { ICategoryRepository } from '../ICategoryRepository'
 
 class CategoryRepositoryInMemory implements ICategoryRepository {
@@ -12,10 +12,11 @@ class CategoryRepositoryInMemory implements ICategoryRepository {
     const all = this.categories
     return all
   }
-  async create(name: string, description: string): Promise<void> {
+  async create(name: string, description: string): Promise<Category> {
     const category = new Category()
     Object.assign(category, { name, description })
     this.categories.push(category)
+    return category
   }
 }
 export { CategoryRepositoryInMemory }

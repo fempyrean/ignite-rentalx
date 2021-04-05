@@ -2,11 +2,11 @@ import 'reflect-metadata'
 import express, { Request, Response, NextFunction } from 'express'
 import 'express-async-errors'
 import swaggerUi from 'swagger-ui-express'
-import swaggerFile from './swagger.json'
-import { createConnectionPostgres } from './database'
-import { router } from './routes'
-import './shared/container'
-import { AppError } from './errors/AppError'
+import swaggerFile from '../../../swagger.json'
+import { createConnectionPostgres } from '@shared/infra/typeorm'
+import { router } from '@shared/infra/http/routes'
+import '../../container'
+import { AppError } from '@shared/errors/AppError'
 
 createConnectionPostgres()
 const app = express()

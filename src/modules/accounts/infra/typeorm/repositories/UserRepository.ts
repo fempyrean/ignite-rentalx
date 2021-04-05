@@ -1,7 +1,7 @@
-import { IUserRepository } from '../IUserRepository'
-import { ICreateUserDTO } from '../../dto/ICreateUserDTO'
 import { getRepository, Repository } from 'typeorm'
-import { User } from '../../../../entities/User'
+import { User } from '@modules/accounts/infra/typeorm/entities/User'
+import { IUserRepository } from '@modules/accounts/repositories/IUserRepository'
+import { ICreateUserDTO } from '@modules/accounts/dto/ICreateUserDTO'
 
 class UserRepository implements IUserRepository {
   private readonly repository: Repository<User>
