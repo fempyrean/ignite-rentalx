@@ -13,11 +13,7 @@ class SpecificationRepository implements ISpecificationRepository {
   }
 
   async findByIds(ids: string[]): Promise<Specification[]> {
-    const specifications = await this.repository
-      .createQueryBuilder('spec')
-      .where('spec.id IN :ids', { ids })
-      .getMany()
-    return specifications
+    return await this.repository.findByIds(ids)
   }
   async findByName(name: string): Promise<Specification> {
     const specRepo = getRepository(Specification)

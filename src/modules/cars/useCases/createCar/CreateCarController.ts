@@ -11,7 +11,7 @@ class CreateCarController {
       license_plate,
       fine_amount,
       brand,
-      category_id
+      category
     } = req.body
     const createCarUseCase = container.resolve(CreateCarUseCase)
     const car = await createCarUseCase.execute({
@@ -21,7 +21,7 @@ class CreateCarController {
       license_plate,
       fine_amount,
       brand,
-      category_id
+      category
     })
 
     return res.status(201).json(car)

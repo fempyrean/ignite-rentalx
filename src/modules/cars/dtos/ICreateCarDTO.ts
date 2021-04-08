@@ -10,6 +10,7 @@ interface ICreateCarDTO {
   brand: string
   category: Category
   specifications?: Specification[]
+  id?: string
 }
 
 export { ICreateCarDTO }
