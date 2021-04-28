@@ -2,9 +2,22 @@ import { ICreateCarDTO } from '@modules/cars/dtos/ICreateCarDTO'
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository'
 import { Car } from '@modules/cars/infra/typeorm/entities/Car'
 import { ICarsFilters } from '@modules/cars/repositories/ICarsRepository'
+import { v4 as uuidV4 } from 'uuid'
 
 class CarRepositoryInMemory implements ICarsRepository {
   private readonly cars: Car[] = []
+
+  async setUnavailable(id: string): Promise<Car> {
+    const carIndex = this.cars.findIndex((car) => car.id === id)
+    this.cars[carIndex].available = false
+    return this.cars[carIndex]
+  }
+
+  async setAvailable(id: string): Promise<Car> {
+    const carIndex = this.cars.findIndex((car) => car.id === id)
+    this.cars[carIndex].available = true
+    return this.cars[carIndex]
+  }
 
   async findById(id: string): Promise<Car> {
     return this.cars.find((car: Car) => car.id === id)
@@ -51,7 +64,7 @@ class CarRepositoryInMemory implements ICarsRepository {
       brand,
       category,
       specifications,
-      id
+      id: id ? id : uuidV4()
     })
     this.cars.push(car)
     return car

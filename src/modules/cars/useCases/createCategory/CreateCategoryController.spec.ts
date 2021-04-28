@@ -30,7 +30,7 @@ describe('Create category controller', () => {
       email: 'bile@rentalx.com.br',
       password: 'biledrogas'
     })
-    const { token } = authResponse.body
+    const { refresh_token } = authResponse.body
 
     const response = await request(app)
       .post('/category')
@@ -38,7 +38,7 @@ describe('Create category controller', () => {
         name: 'any_name',
         description: 'any_description'
       })
-      .set({ Authorization: `Bearer ${token}` })
+      .set({ Authorization: `Bearer ${refresh_token}` })
     expect(response.status).toBe(201)
   })
 
@@ -47,16 +47,16 @@ describe('Create category controller', () => {
       email: 'bile@rentalx.com.br',
       password: 'biledrogas'
     })
-    const { token } = authResponse.body
+    const { refresh_token } = authResponse.body
     const response = await request(app)
       .post('/category')
       .send({ name: 'any_category_name', description: 'any_description' })
-      .set({ Authorization: `Bearer ${token}` })
+      .set({ Authorization: `Bearer ${refresh_token}` })
 
     const response2 = await request(app)
       .post('/category')
       .send({ name: 'any_category_name', description: 'any_description' })
-      .set({ Authorization: `Bearer ${token}` })
+      .set({ Authorization: `Bearer ${refresh_token}` })
 
     expect(response.status).toBe(201)
     expect(response2.status).toBe(400)

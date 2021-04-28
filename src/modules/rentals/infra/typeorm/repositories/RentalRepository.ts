@@ -10,6 +10,18 @@ class RentalRepository implements IRentalRepository {
     this.repository = getRepository(Rental)
   }
 
+  async findByUserId(user_id: string): Promise<Rental[]> {
+    return await this.repository.find({
+      where: { user_id },
+      relations: ['car']
+    })
+  }
+
+  async findById(id: string): Promise<Rental> {
+    const rental = await this.repository.findOne(id)
+    return rental
+  }
+
   async findOpenRentalByCarId(car_id: string): Promise<Rental> {
     const rental = await this.repository.findOne({
       where: { car_id: car_id, total: IsNull() }
@@ -27,12 +39,18 @@ class RentalRepository implements IRentalRepository {
   async create({
     user_id,
     car_id,
-    expected_return_date
+    expected_return_date,
+    id,
+    end_date,
+    total
   }: ICreateRentalDTO): Promise<Rental> {
     const rental = this.repository.create({
       user_id,
       car_id,
-      expected_return_date
+      expected_return_date,
+      id,
+      end_date,
+      total
     })
     await this.repository.save(rental)
     return rental

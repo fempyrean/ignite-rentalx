@@ -10,7 +10,7 @@ import { ListAvailableCarsController } from '@modules/cars/useCases/listAvailabl
 import { CreateCarSpecificationController } from '@modules/cars/useCases/createCarSpecification/CreateCarSpecificationController'
 import { UploadCarImagesController } from '@modules/cars/useCases/uploadCarImages/UploadCarImagesController'
 
-const upload = multer(uploadConfig.upload('./tmp/cars'))
+const upload = multer(uploadConfig)
 
 const carRoutes = Router()
 const createCarController = new CreateCarController()

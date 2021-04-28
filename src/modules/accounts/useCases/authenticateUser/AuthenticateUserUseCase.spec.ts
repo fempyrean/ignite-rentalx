@@ -1,8 +1,11 @@
 import { UserRepositoryInMemory } from '../../repositories/in-memory/UserRepositoryInMemory'
+import { UserTokenRepositoryInMemory } from '../../repositories/in-memory/UserTokenRepositoryInMemory'
 import { CreateUserUseCase } from '../createUser/CreateUserUseCase'
 import { AuthenticateUserUseCase } from '../authenticateUser/AuthenticateUserUseCase'
 import { ICreateUserDTO } from '../../dto/ICreateUserDTO'
 import { AppError } from '../../../../shared/errors/AppError'
+import { IDateProvider } from '../../../../shared/container/providers/DateProvider/IDateProvider'
+import { DayjsDateProvider } from '../../../../shared/container/providers/DateProvider/implementations/DayjsDateProvider'
 
 const getUserData = () => ({
   name: 'any_name',
@@ -15,11 +18,17 @@ describe('Authenticate user', () => {
   let authenticateUserUseCase: AuthenticateUserUseCase
   let createUserUseCase: CreateUserUseCase
   let userRepositoryInMemory: UserRepositoryInMemory
+  let userTokenRepositoryInMemory: UserTokenRepositoryInMemory
+  let dateProvider: IDateProvider
 
   beforeEach(() => {
     userRepositoryInMemory = new UserRepositoryInMemory()
+    userTokenRepositoryInMemory = new UserTokenRepositoryInMemory()
+    dateProvider = new DayjsDateProvider()
     authenticateUserUseCase = new AuthenticateUserUseCase(
-      userRepositoryInMemory
+      userRepositoryInMemory,
+      userTokenRepositoryInMemory,
+      dateProvider
     )
     createUserUseCase = new CreateUserUseCase(userRepositoryInMemory)
   })
@@ -34,23 +43,23 @@ describe('Authenticate user', () => {
     expect(response).toHaveProperty('token')
   })
 
-  it('should not be able to authenticate a non-existent user', () => {
-    expect(async () => {
-      await authenticateUserUseCase.execute({
+  it('should not be able to authenticate a non-existent user', async () => {
+    await expect(
+      authenticateUserUseCase.execute({
         email: 'non_existent@mail.com',
         password: 'non_existent_password'
       })
-    }).rejects.toBeInstanceOf(AppError)
+    ).rejects.toEqual(new AppError('Could not find user'))
   })
 
-  it('should not be able to authenticate an user with incorrect password', () => {
-    expect(async () => {
-      const user = getUserData()
-      await createUserUseCase.execute(user)
-      await authenticateUserUseCase.execute({
+  it('should not be able to authenticate an user with incorrect password', async () => {
+    const user = getUserData()
+    await createUserUseCase.execute(user)
+    await expect(
+      authenticateUserUseCase.execute({
         email: user.email,
         password: 'invalid_password'
       })
-    }).rejects.toBeInstanceOf(AppError)
+    ).rejects.toEqual(new AppError('Email or password incorrect'))
   })
 })

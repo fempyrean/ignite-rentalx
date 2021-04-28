@@ -36,11 +36,11 @@ describe('Create car', () => {
     expect(car).toHaveProperty('id')
   })
 
-  it('should not be able create a new car with an used licensed_plate', () => {
-    expect(async () => {
-      await createCarUseCase.execute(await getCar())
-      await createCarUseCase.execute(await getCar())
-    }).rejects.toBeInstanceOf(AppError)
+  it('should not be able create a new car with an used licensed_plate', async () => {
+    await createCarUseCase.execute(await getCar())
+    await expect(createCarUseCase.execute(await getCar())).rejects.toEqual(
+      new AppError('License plate already being used!')
+    )
   })
 
   it('should have cars created with available as true by default', async () => {

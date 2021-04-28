@@ -12,6 +12,8 @@ interface ICarsRepository {
   findByLicensePlate(license_plate: string): Promise<Car>
   findById(id: string): Promise<Car>
   findAvailable(data: ICarsFilters): Promise<Car[]>
+  setUnavailable(id: string): Promise<Car>
+  setAvailable(id: string): Promise<Car>
 }
 
 export { ICarsRepository }

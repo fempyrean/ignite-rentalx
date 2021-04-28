@@ -30,7 +30,7 @@ describe('List Categories Controller', () => {
       email: 'bile@rentalx.com.br',
       password: 'biledrogas'
     })
-    const { token } = authResponse.body
+    const { refresh_token } = authResponse.body
 
     await request(app)
       .post('/category')
@@ -38,7 +38,7 @@ describe('List Categories Controller', () => {
         name: 'any_name',
         description: 'any_description'
       })
-      .set({ Authorization: `Bearer ${token}` })
+      .set({ Authorization: `Bearer ${refresh_token}` })
 
     const response = await request(app).get('/category')
     expect(response.status).toBe(200)

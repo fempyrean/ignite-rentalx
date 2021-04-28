@@ -42,16 +42,16 @@ describe('Create car specification', () => {
     )
   })
 
-  it('should not be able to add a new specification to a non-existent car', () => {
-    expect(async () => {
-      const car_id = 'invalid_id'
-      const specifications_id = [
-        'invalid_spec1',
-        'invalid_spec2',
-        'invalid_spec3'
-      ]
-      await createCarSpecificationUseCase.execute({ car_id, specifications_id })
-    }).rejects.toBeInstanceOf(AppError)
+  it('should not be able to add a new specification to a non-existent car', async () => {
+    const car_id = 'invalid_id'
+    const specifications_id = [
+      'invalid_spec1',
+      'invalid_spec2',
+      'invalid_spec3'
+    ]
+    await expect(
+      createCarSpecificationUseCase.execute({ car_id, specifications_id })
+    ).rejects.toEqual(new AppError('Could not find car'))
   })
 
   it('should be able to add a new specification to a car', async () => {

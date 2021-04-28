@@ -1,4 +1,5 @@
 import { IRentalRepository } from '@modules/rentals/repositories/IRentalRepository'
+import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository'
 import { Rental } from '@modules/rentals/infra/typeorm/entities/Rental'
 import { injectable, inject } from 'tsyringe'
 import { AppError } from '@shared/errors/AppError'
@@ -16,7 +17,8 @@ class CreateRentalUseCase {
     @inject('RentalRepository')
     private readonly rentalRepository: IRentalRepository,
     @inject('DateProvider')
-    private readonly dateProvider: IDateProvider
+    private readonly dateProvider: IDateProvider,
+    @inject('CarRepository') private readonly carRepository: ICarsRepository
   ) {}
 
   async execute({
@@ -47,6 +49,8 @@ class CreateRentalUseCase {
       car_id,
       expected_return_date
     })
+
+    const car = await this.carRepository.setUnavailable(car_id)
 
     return rental
   }
