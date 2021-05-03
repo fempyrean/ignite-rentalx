@@ -41,4 +41,4 @@ jobs:
           port: ${{secrets.SSH_PORT}}
           key: ${{secrets.SSH_SECRET}}
           source: "., !node_modules"
-          target: "test"
+          target: "~/app/ignite-rentalx"
