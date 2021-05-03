@@ -51,7 +51,7 @@ jobs:
           port: ${{secrets.SSH_PORT}}
           key: ${{secrets.SSH_SECRET}}
           script: |
-            cd ~/app/api-rentx
+            cd ~/app/ignite-rentalx
             yarn
             ./node-modules/.bin/typeorm migration:run
             pm2 restart rentalx-api
