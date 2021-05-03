@@ -10,9 +10,11 @@ import { router } from '@shared/infra/http/routes'
 import '../../container'
 import { AppError } from '@shared/errors/AppError'
 import upload from '@config/upload'
+import rateLimiter from '@shared/infra/http/middlewares/rateLimiter'
 
 createConnectionPostgres()
 const app = express()
+app.use(rateLimiter)
 app.use(express.json())
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 app.use('/avatar', express.static(`${upload.tmpFolder}/avatar`))
